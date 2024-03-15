@@ -22,7 +22,7 @@ fun MainAppContent(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
-    var currentScreen by rememberSaveable { mutableStateOf(MovieRoute.SEARCH) }
+    var currentScreen by rememberSaveable { mutableStateOf(MovieRoute.HOME) }
     Scaffold(
         topBar = {
             MovieTopBar(currentScreen)

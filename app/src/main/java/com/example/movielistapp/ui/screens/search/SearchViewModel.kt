@@ -3,7 +3,7 @@ package com.example.movielistapp.ui.screens.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movielistapp.data.MovieRepository
-import com.example.movielistapp.data.model.Movie
+import com.example.movielistapp.data.network.model.Movie
 import com.example.movielistapp.di.CustomHandler
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel

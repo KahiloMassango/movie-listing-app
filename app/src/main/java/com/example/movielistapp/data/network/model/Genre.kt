@@ -1,4 +1,4 @@
-package com.example.movielistapp.data.model
+package com.example.movielistapp.data.network.model
 
 data class Genre(
     val id: Int,

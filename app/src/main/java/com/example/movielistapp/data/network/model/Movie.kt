@@ -1,41 +1,67 @@
-package com.example.movielistapp.data.model
+package com.example.movielistapp.data.network.model
 
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class MoviesResponse(
-    val page: Int,
-    val results: List<Movie>,
+    val page: Int ,
+    val results: List<Movie> ,
 )
 
 data class Movie(
-    val adult: Boolean,
+    val adult: Boolean ,
     @SerializedName("backdrop_path")
-    val backdropPath: String,
-    val genres: List<Genre>?,
-    val id: Int,
+    val backdropPath: String ,
+    val id: Int ,
     @SerializedName("imdb_id")
-    val imdbId: String?,
+    val imdbId: String? ,
     @SerializedName("original_title")
-    val title: String,
-    val overview: String,
+    val title: String ,
+    val overview: String ,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String ,
     @SerializedName("release_date")
-    val releaseDate: String,
+    val releaseDate: String ,
     val runtime: Int,
-    val status: String?,
-    val video: Boolean,
+    val status: String? ,
     @SerializedName("vote_average")
-    val voteAverage: Double,
+    val voteAverage: Double ,
     @SerializedName("vote_count")
     val voteCount: Int
 )
 
+@Entity("favorites")
+data class MovieDto(
+    val adult: Boolean ,
+    val backdropPath: String ,
+    @PrimaryKey(false)
+    val id: Int ,
+    val imdbId: String?,
+    val title: String ,
+    val overview: String ,
+    val posterPath: String ,
+    val releaseDate: String ,
+    val runtime: Int,
+    val status: String? ,
+    val voteAverage: Double ,
+    val voteCount: Int
+)
+
+fun MovieDto.toMovie(): Movie = Movie(
+    adult, backdropPath, id, imdbId, title, overview, posterPath, releaseDate, runtime, status, voteAverage, voteCount
+)
+
+fun Movie.toMovieDto(): MovieDto = MovieDto(
+    adult, backdropPath, id, imdbId, title, overview, posterPath, releaseDate, runtime, status, voteAverage, voteCount
+)
+
+
+
 val movieOne = Movie(
     adult = false,
     backdropPath = "https://image.tmdb.org/t/p/original/4woSOUD0equAYzvwhWBHIJDCM88.jpg",
-    genres = listOf(genre1, genre2, genre3),
     id = 1096197,
     imdbId = "tt16253418",
     title = "No Way Up",
@@ -44,7 +70,6 @@ val movieOne = Movie(
     releaseDate = "2024-01-18",
     runtime = 90,
     status = "Released",
-    video = false,
     voteAverage = 5.91,
     voteCount = 94
 )
@@ -54,4 +79,4 @@ val movieFour = movieOne.copy(id = 435)
 val movieFive = movieOne.copy(id = 3354)
 
 
-val movieList = listOf(movieOne, movieTwo, movieThree, movieFour, movieFive)
+val movieList = listOf(movieOne , movieTwo , movieThree , movieFour , movieFive)

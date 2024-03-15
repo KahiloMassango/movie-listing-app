@@ -1,7 +1,6 @@
 package com.example.movielistapp.ui.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,17 +28,17 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.movielistapp.data.model.Genre
-import com.example.movielistapp.data.model.Movie
-import com.example.movielistapp.data.model.movieOne
+import com.example.movielistapp.data.network.model.Genre
+import com.example.movielistapp.data.network.model.Movie
+import com.example.movielistapp.data.network.model.movieOne
 import com.example.movielistapp.ui.theme.MovieListAppTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DefaultMovieCard(
-    modifier: Modifier = Modifier,
-    movie: Movie,
+    modifier: Modifier = Modifier ,
+    movie: Movie ,
     onClick: () -> Unit
 ){
     val imageRequest  = rememberAsyncImagePainter(
@@ -51,25 +50,31 @@ fun DefaultMovieCard(
            // .height(250.dp),
         onClick = { onClick() },
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.background),
-        shape = RoundedCornerShape(topStart  = 12.dp, topEnd = 12.dp),
+        shape = RoundedCornerShape(12.dp),
         border = BorderStroke(0.dp, Color.Transparent)
     ) {
         Column(
             modifier = Modifier
         ) {
-            Image(
+            AsyncImage(
                 modifier = Modifier.clip(RoundedCornerShape(12.dp)),
-                painter = imageRequest,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(movie.posterPath)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = null,
             )
             Spacer(Modifier.height(8.dp))
 
-            /*Text(
+            Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = movie.title,
                 style = MaterialTheme.typography.titleMedium
-            )*/
-            StarRating(rating = movie.voteAverage)
+            )
+            StarRating(
+                modifier = Modifier.padding(bottom = 5.dp),
+                rating = movie.voteAverage
+            )
         }
     }
 }
@@ -77,18 +82,20 @@ fun DefaultMovieCard(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExtendedMovieCard(
-    modifier: Modifier = Modifier,
-    movie: Movie,
+    modifier: Modifier = Modifier ,
+    movie: Movie ,
     onClick: () -> Unit
 ) {
     OutlinedCard(
-        modifier = modifier.height(273.dp),
+        modifier = modifier
+            .height(273.dp) ,
         onClick = { onClick() },
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.background),
         border = BorderStroke(0.dp, Color.Transparent),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             AsyncImage(
@@ -116,10 +123,6 @@ fun ExtendedMovieCard(
                     rating = movie.voteAverage
                 )
 
-                GenreList(
-                    modifier = Modifier.padding(bottom = 8.dp),
-                    genres = movie.genres
-                )
                 Text(
                     text = movie.overview,
                     style = MaterialTheme.typography.bodySmall,
@@ -135,8 +138,8 @@ fun ExtendedMovieCard(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpandedMovieCard(
-    modifier: Modifier = Modifier,
-    movie: Movie,
+    modifier: Modifier = Modifier ,
+    movie: Movie ,
     onClick: () -> Unit
 ) {
     OutlinedCard(
@@ -147,7 +150,7 @@ fun ExpandedMovieCard(
 
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
         ) {
             AsyncImage(
                 modifier = Modifier
@@ -194,12 +197,10 @@ fun GenreList(modifier: Modifier = Modifier, genres: List<Genre>?) {
     }
 }
 
-
-
 @Composable
 @Preview
 private fun CardsPreview() {
     MovieListAppTheme {
-        DefaultMovieCard(movie = movieOne, onClick = {})
+        DefaultMovieCard(movie = movieOne , onClick = {})
     }
 }

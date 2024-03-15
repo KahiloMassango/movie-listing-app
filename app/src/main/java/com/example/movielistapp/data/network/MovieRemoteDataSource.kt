@@ -1,10 +1,10 @@
 package com.example.movielistapp.data.network
 
-import com.example.movielistapp.data.model.Movie
+import com.example.movielistapp.data.network.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-interface RemoteDataSource {
+interface MovieRemoteDataSource {
     suspend fun fetchPopularMovies(): List<Movie>
 
     suspend fun fetchUpcomingMovies(): List<Movie>
@@ -16,9 +16,9 @@ interface RemoteDataSource {
     suspend fun fetchMoviesByQuery(query: String): List<Movie>
 }
 
-class RemoteDataSourceImpl(
+class MovieRemoteDataSourceImpl(
     private val apiService: MovieApiService
-): RemoteDataSource {
+): MovieRemoteDataSource {
     override suspend fun fetchPopularMovies(): List<Movie> {
         return withContext(Dispatchers.IO) {
             apiService.getPopularMovies().results

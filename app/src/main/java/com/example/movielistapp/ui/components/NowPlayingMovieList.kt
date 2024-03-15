@@ -9,15 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.movielistapp.data.model.Movie
-import com.example.movielistapp.data.model.movieList
+import com.example.movielistapp.data.network.model.Movie
+import com.example.movielistapp.data.network.model.movieList
 import com.example.movielistapp.ui.theme.MovieListAppTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NowPlayingMovieList(
-    modifier: Modifier = Modifier,
-    movies: List<Movie>,
+    modifier: Modifier = Modifier ,
+    movies: List<Movie> ,
     onMovieClick: (Movie) -> Unit
 ) {
     val state = rememberLazyListState()
@@ -37,7 +37,7 @@ fun NowPlayingMovieList(
 private fun NowPlayingMoviePreview() {
     MovieListAppTheme {
         NowPlayingMovieList(
-            movies = movieList,
+            movies = movieList ,
             onMovieClick = { 44 }
         )
     }
