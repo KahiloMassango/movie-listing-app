@@ -1,6 +1,6 @@
 package com.example.movielistapp.data
 
-import com.example.movielistapp.data.network.model.Movie
+import com.example.movielistapp.data.model.Movie
 import com.example.movielistapp.data.network.model.MovieEntity
 import kotlinx.coroutines.flow.Flow
 

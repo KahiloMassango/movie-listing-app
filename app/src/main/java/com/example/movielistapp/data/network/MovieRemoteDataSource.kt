@@ -1,6 +1,6 @@
 package com.example.movielistapp.data.network
 
-import com.example.movielistapp.data.network.model.Movie
+import com.example.movielistapp.data.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -3,7 +3,7 @@ package com.example.movielistapp.data.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.movielistapp.data.network.model.Movie
+import com.example.movielistapp.data.model.Movie
 
 @Entity("favorites")
 data class MovieEntity(

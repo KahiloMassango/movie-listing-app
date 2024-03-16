@@ -3,7 +3,7 @@ package com.example.movielistapp.ui.screens.favorite
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movielistapp.data.MovieRepository
-import com.example.movielistapp.data.network.model.Movie
+import com.example.movielistapp.data.model.Movie
 import com.example.movielistapp.data.network.model.toMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
