@@ -1,14 +1,20 @@
 package com.example.movielistapp.di
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
-import com.example.movielistapp.data.repository.MovieRepository
-import com.example.movielistapp.data.repository.MovieRepositoryImpl
+import com.example.movielistapp.data.MovieRepository
+import com.example.movielistapp.data.MovieRepositoryImpl
+import com.example.movielistapp.data.local.dao.AppDatabase
+import com.example.movielistapp.data.local.dao.MovieDao
+import com.example.movielistapp.data.local.MovieLocalDataSource
+import com.example.movielistapp.data.local.MovieLocalDataSourceImpl
 import com.example.movielistapp.data.network.MovieApiService
-import com.example.movielistapp.data.network.RemoteDataSource
-import com.example.movielistapp.data.network.RemoteDataSourceImpl
+import com.example.movielistapp.data.network.MovieRemoteDataSource
+import com.example.movielistapp.data.network.MovieRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -42,12 +48,25 @@ object AppModule {
     }
 
     @Provides
-    fun provideRemoteDataSource(apiService: MovieApiService): RemoteDataSource {
-        return RemoteDataSourceImpl(apiService)
+    fun provideRemoteDataSource(apiService: MovieApiService): MovieRemoteDataSource {
+        return MovieRemoteDataSourceImpl(apiService)
     }
 
     @Provides
-    fun provideMovieRepository(remoteDataSource: RemoteDataSource): MovieRepository {
-        return MovieRepositoryImpl(remoteDataSource)
+    fun provideDatabaseService(@ApplicationContext context: Context): MovieDao {
+        return AppDatabase.getDatabase(context).movieDao()
+    }
+
+    @Provides
+    fun provideLocalDataSource(movieDao: MovieDao): MovieLocalDataSource {
+        return MovieLocalDataSourceImpl(movieDao)
+    }
+
+    @Provides
+    fun provideMovieRepository(
+        movieRemoteDataSource: MovieRemoteDataSource,
+        movieLocalDataSource: MovieLocalDataSource
+    ): MovieRepository {
+        return MovieRepositoryImpl(movieRemoteDataSource, movieLocalDataSource)
     }
 }

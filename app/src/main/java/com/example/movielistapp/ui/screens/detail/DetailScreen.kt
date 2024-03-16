@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +37,6 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.movielistapp.R
 import com.example.movielistapp.data.network.MovieApiService.Companion.ImdbUrl
-import com.example.movielistapp.ui.components.GenreList
 import com.example.movielistapp.ui.components.StarRating
 
 
@@ -80,6 +80,16 @@ fun DetailScreen(
                 contentScale = ContentScale.Crop
             )
             IconButton(
+                modifier = Modifier.align(Alignment.TopEnd),
+                onClick = { viewModel.saveMovie(movie = uiState) }
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Bookmark ,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onBackground
+                )
+            }
+            IconButton(
                 onClick = { navController.navigateUp() }
             ) {
                Icon(
@@ -107,7 +117,6 @@ fun DetailScreen(
                         color = MaterialTheme.colorScheme.onBackground
                     )
                     StarRating(rating = uiState.voteAverage)
-                    GenreList(genres = uiState.genres)
                 }
                 Image(
                     modifier = Modifier

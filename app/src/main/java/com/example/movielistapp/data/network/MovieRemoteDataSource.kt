@@ -1,25 +1,25 @@
 package com.example.movielistapp.data.network
 
-import com.example.movielistapp.data.model.NetworkMovie
+import com.example.movielistapp.data.network.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-interface RemoteDataSource {
-    suspend fun fetchPopularMovies(): List<NetworkMovie>
+interface MovieRemoteDataSource {
+    suspend fun fetchPopularMovies(): List<Movie>
 
-    suspend fun fetchUpcomingMovies(): List<NetworkMovie>
+    suspend fun fetchUpcomingMovies(): List<Movie>
 
-    suspend fun fetchNowPlayingMovies(): List<NetworkMovie>
+    suspend fun fetchNowPlayingMovies(): List<Movie>
 
-    suspend fun fetchMovieById(id: Int): NetworkMovie
+    suspend fun fetchMovieById(id: Int): Movie
 
-    suspend fun fetchMoviesByQuery(query: String): List<NetworkMovie>
+    suspend fun fetchMoviesByQuery(query: String): List<Movie>
 }
 
-class RemoteDataSourceImpl(
+class MovieRemoteDataSourceImpl(
     private val apiService: MovieApiService
-): RemoteDataSource {
-    override suspend fun fetchPopularMovies(): List<NetworkMovie> {
+): MovieRemoteDataSource {
+    override suspend fun fetchPopularMovies(): List<Movie> {
         return withContext(Dispatchers.IO) {
             apiService.getPopularMovies().results
                 .map {
@@ -31,7 +31,7 @@ class RemoteDataSourceImpl(
         }
     }
 
-    override suspend fun fetchUpcomingMovies(): List<NetworkMovie> {
+    override suspend fun fetchUpcomingMovies(): List<Movie> {
         return withContext(Dispatchers.IO) {
             apiService.getUpcomingMovies().results
                 .map {
@@ -43,7 +43,7 @@ class RemoteDataSourceImpl(
         }
     }
 
-    override suspend fun fetchNowPlayingMovies(): List<NetworkMovie> {
+    override suspend fun fetchNowPlayingMovies(): List<Movie> {
        return withContext(Dispatchers.IO) {
            apiService.getNowPlayingMovies().results
                .map {
@@ -55,7 +55,7 @@ class RemoteDataSourceImpl(
        }
     }
 
-    override suspend fun fetchMovieById(id: Int): NetworkMovie {
+    override suspend fun fetchMovieById(id: Int): Movie {
         return withContext(Dispatchers.IO) {
             apiService.getMovieById(id = id)
                 .let {
@@ -67,7 +67,7 @@ class RemoteDataSourceImpl(
         }
     }
 
-    override suspend fun fetchMoviesByQuery(query: String): List<NetworkMovie> {
+    override suspend fun fetchMoviesByQuery(query: String): List<Movie> {
         return apiService.searchMovieByQuery(query).results
             .map {
                 it.copy(

@@ -2,8 +2,8 @@ package com.example.movielistapp.ui.screens.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movielistapp.data.repository.MovieRepository
-import com.example.movielistapp.data.model.NetworkMovie
+import com.example.movielistapp.data.MovieRepository
+import com.example.movielistapp.data.network.model.Movie
 import com.example.movielistapp.di.CustomHandler
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val movieRepository: MovieRepository ,
+    private val movieRepository: MovieRepository,
     private val handler: CustomHandler
 ): ViewModel() {
 
@@ -42,7 +42,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun parseMovieToDetail(movieObj: NetworkMovie) {
+    fun parseMovieToDetail(movieObj: Movie) {
         viewModelScope.launch {
             val movie = Gson().toJson(movieObj)
             handler.savedStateHandle["movie"] = movie
@@ -52,5 +52,5 @@ class SearchViewModel @Inject constructor(
 
 data class SearchUiState(
     val searchText: String = "",
-    val results: List<NetworkMovie> = emptyList()
+    val results: List<Movie> = emptyList()
 )

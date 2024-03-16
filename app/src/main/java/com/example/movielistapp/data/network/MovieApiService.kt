@@ -1,7 +1,7 @@
 package com.example.movielistapp.data.network
 
-import com.example.movielistapp.data.model.NetworkMovie
-import com.example.movielistapp.data.model.MoviesResponse
+import com.example.movielistapp.data.network.model.Movie
+import com.example.movielistapp.data.network.model.MoviesResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -25,7 +25,7 @@ interface MovieApiService {
 
     @Headers(apiKey)
     @GET("movie/{movieId}")
-    suspend fun getMovieById(@Path("movieId") id: Int): NetworkMovie
+    suspend fun getMovieById(@Path("movieId") id: Int): Movie
 
     @Headers(apiKey)
     @GET("search/movie?include_adult=true")
