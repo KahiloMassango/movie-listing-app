@@ -1,7 +1,7 @@
 package com.example.movielistapp.data.repository
 
+import com.example.movielistapp.data.local.entities.MovieEntity
 import com.example.movielistapp.data.model.Movie
-import com.example.movielistapp.data.network.model.MovieEntity
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
@@ -19,6 +19,6 @@ interface MovieRepository {
 
     suspend fun deleteLocalMovie(movie: MovieEntity)
 
-    fun getLocalMovies(): Flow<List<MovieEntity>>
+    fun getLocalMovies(): Flow<List<Movie>>
 }
 

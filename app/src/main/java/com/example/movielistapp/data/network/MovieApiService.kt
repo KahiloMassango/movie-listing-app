@@ -1,7 +1,7 @@
 package com.example.movielistapp.data.network
 
 import com.example.movielistapp.data.model.Movie
-import com.example.movielistapp.data.model.MoviesResponse
+import com.example.movielistapp.data.network.models.NetworkMovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -13,15 +13,15 @@ const val apiKey = "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4OWQyN
 interface MovieApiService {
     @Headers(apiKey)
     @GET("movie/popular?language=en-US&page=1")
-    suspend fun getPopularMovies(): MoviesResponse
+    suspend fun getPopularMovies(): NetworkMovieResponse
 
     @Headers(apiKey)
     @GET("movie/upcoming?language=en-US&page=1")
-    suspend fun getUpcomingMovies(): MoviesResponse
+    suspend fun getUpcomingMovies(): NetworkMovieResponse
 
     @Headers(apiKey)
     @GET("movie/now_playing?language=en-US&page=1")
-    suspend fun getNowPlayingMovies(): MoviesResponse
+    suspend fun getNowPlayingMovies(): NetworkMovieResponse
 
     @Headers(apiKey)
     @GET("movie/{movieId}")
@@ -29,7 +29,7 @@ interface MovieApiService {
 
     @Headers(apiKey)
     @GET("search/movie?include_adult=true")
-    suspend fun searchMovieByQuery(@Query("query") query: String): MoviesResponse
+    suspend fun searchMovieByQuery(@Query("query") query: String): NetworkMovieResponse
 
     companion object {
         const val ImageUrl = "https://image.tmdb.org/t/p/original"

@@ -1,10 +1,12 @@
 package com.example.movielistapp.data.repository
 
 import com.example.movielistapp.data.local.MovieLocalDataSource
-import com.example.movielistapp.data.network.MovieRemoteDataSource
+import com.example.movielistapp.data.local.entities.MovieEntity
+import com.example.movielistapp.data.local.entities.asMovie
 import com.example.movielistapp.data.model.Movie
-import com.example.movielistapp.data.network.model.MovieEntity
+import com.example.movielistapp.data.network.MovieRemoteDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 
 class MovieRepositoryImpl(
@@ -41,7 +43,8 @@ class MovieRepositoryImpl(
         movieLocalDataSource.deleteMovie(movie)
     }
 
-    override fun getLocalMovies(): Flow<List<MovieEntity>> {
+    override fun getLocalMovies(): Flow<List<Movie>> {
         return movieLocalDataSource.getMovies()
+            .map { it.map(MovieEntity::asMovie) }
     }
 }
