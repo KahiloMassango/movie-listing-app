@@ -2,8 +2,8 @@ package com.example.movielistapp.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movielistapp.data.MovieRepository
-import com.example.movielistapp.data.model.Movie
+import com.example.movielistapp.data.repository.MovieRepository
+import com.example.movielistapp.data.model.NetworkMovie
 import com.example.movielistapp.di.CustomHandler
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor (
-    private val movieRepository: MovieRepository,
+    private val movieRepository: MovieRepository ,
     private val handler: CustomHandler
 ): ViewModel() {
 
@@ -48,7 +48,7 @@ class HomeViewModel @Inject constructor (
         }
     }
 
-    fun parseMovieToDetail(movieObj: Movie) {
+    fun parseMovieToDetail(movieObj: NetworkMovie) {
         viewModelScope.launch {
             val movie = Gson().toJson(movieObj)
             handler.savedStateHandle["movie"] = movie
@@ -57,8 +57,8 @@ class HomeViewModel @Inject constructor (
 }
 
 data class HomeUiState(
-    val popularMovies: List<Movie> = emptyList(),
-    val playingNowMovies: List<Movie> = emptyList(),
-    val upcomingMovies: List<Movie> = emptyList()
+    val popularMovies: List<NetworkMovie> = emptyList() ,
+    val playingNowMovies: List<NetworkMovie> = emptyList() ,
+    val upcomingMovies: List<NetworkMovie> = emptyList()
 )
 

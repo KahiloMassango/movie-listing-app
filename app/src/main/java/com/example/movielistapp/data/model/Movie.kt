@@ -1,41 +1,30 @@
 package com.example.movielistapp.data.model
 
 
-import com.google.gson.annotations.SerializedName
-
 data class MoviesResponse(
-    val page: Int,
-    val results: List<Movie>,
+    val page: Int ,
+    val results: List<Movie> ,
 )
 
 data class Movie(
     val adult: Boolean,
-    @SerializedName("backdrop_path")
     val backdropPath: String,
-    val genres: List<Genre>?,
     val id: Int,
-    @SerializedName("imdb_id")
     val imdbId: String?,
-    @SerializedName("original_title")
     val title: String,
     val overview: String,
-    @SerializedName("poster_path")
     val posterPath: String,
-    @SerializedName("release_date")
     val releaseDate: String,
     val runtime: Int,
     val status: String?,
     val video: Boolean,
-    @SerializedName("vote_average")
     val voteAverage: Double,
-    @SerializedName("vote_count")
     val voteCount: Int
 )
 
 val movieOne = Movie(
     adult = false,
     backdropPath = "https://image.tmdb.org/t/p/original/4woSOUD0equAYzvwhWBHIJDCM88.jpg",
-    genres = listOf(genre1, genre2, genre3),
     id = 1096197,
     imdbId = "tt16253418",
     title = "No Way Up",

@@ -1,8 +1,8 @@
 package com.example.movielistapp.di
 
 import androidx.lifecycle.SavedStateHandle
-import com.example.movielistapp.data.MovieRepository
-import com.example.movielistapp.data.MovieRepositoryImpl
+import com.example.movielistapp.data.repository.MovieRepository
+import com.example.movielistapp.data.repository.MovieRepositoryImpl
 import com.example.movielistapp.data.network.MovieApiService
 import com.example.movielistapp.data.network.RemoteDataSource
 import com.example.movielistapp.data.network.RemoteDataSourceImpl

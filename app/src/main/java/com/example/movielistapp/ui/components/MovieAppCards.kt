@@ -30,7 +30,7 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.movielistapp.data.model.Genre
-import com.example.movielistapp.data.model.Movie
+import com.example.movielistapp.data.model.NetworkMovie
 import com.example.movielistapp.data.model.movieOne
 import com.example.movielistapp.ui.theme.MovieListAppTheme
 
@@ -38,8 +38,8 @@ import com.example.movielistapp.ui.theme.MovieListAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DefaultMovieCard(
-    modifier: Modifier = Modifier,
-    movie: Movie,
+    modifier: Modifier = Modifier ,
+    movie: NetworkMovie ,
     onClick: () -> Unit
 ){
     val imageRequest  = rememberAsyncImagePainter(
@@ -77,8 +77,8 @@ fun DefaultMovieCard(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExtendedMovieCard(
-    modifier: Modifier = Modifier,
-    movie: Movie,
+    modifier: Modifier = Modifier ,
+    movie: NetworkMovie ,
     onClick: () -> Unit
 ) {
     OutlinedCard(
@@ -135,8 +135,8 @@ fun ExtendedMovieCard(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpandedMovieCard(
-    modifier: Modifier = Modifier,
-    movie: Movie,
+    modifier: Modifier = Modifier ,
+    movie: NetworkMovie ,
     onClick: () -> Unit
 ) {
     OutlinedCard(
