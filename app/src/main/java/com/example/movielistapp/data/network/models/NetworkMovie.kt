@@ -1,13 +1,18 @@
 package com.example.movielistapp.data.network.models
 
-import com.example.movielistapp.data.model.Genre
+import com.example.movielistapp.data.local.entities.MovieEntity
 import com.google.gson.annotations.SerializedName
+
+
+data class NetworkMovieResponse(
+    val page: Int ,
+    val results: List<NetworkMovie> ,
+)
 
 data class NetworkMovie(
     val adult: Boolean ,
     @SerializedName("backdrop_path")
     val backdropPath: String ,
-    val genres: List<Genre>? ,
     val id: Int ,
     @SerializedName("imdb_id")
     val imdbId: String? ,
@@ -25,4 +30,19 @@ data class NetworkMovie(
     val voteAverage: Double ,
     @SerializedName("vote_count")
     val voteCount: Int
+)
+
+fun NetworkMovie.asEntity() = MovieEntity(
+    adult ,
+    backdropPath ,
+    id ,
+    imdbId ,
+    title ,
+    overview ,
+    posterPath ,
+    releaseDate ,
+    runtime ,
+    status ,
+    voteAverage ,
+    voteCount
 )
