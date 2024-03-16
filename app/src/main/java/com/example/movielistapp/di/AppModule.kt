@@ -2,8 +2,8 @@ package com.example.movielistapp.di
 
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
-import com.example.movielistapp.data.MovieRepository
-import com.example.movielistapp.data.MovieRepositoryImpl
+import com.example.movielistapp.data.repository.MovieRepository
+import com.example.movielistapp.data.repository.MovieRepositoryImpl
 import com.example.movielistapp.data.local.dao.AppDatabase
 import com.example.movielistapp.data.local.dao.MovieDao
 import com.example.movielistapp.data.local.MovieLocalDataSource

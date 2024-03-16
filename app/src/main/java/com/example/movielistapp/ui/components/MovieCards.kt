@@ -28,9 +28,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.movielistapp.data.network.model.Genre
-import com.example.movielistapp.data.network.model.Movie
-import com.example.movielistapp.data.network.model.movieOne
+import com.example.movielistapp.data.model.Genre
+import com.example.movielistapp.data.model.Movie
+import com.example.movielistapp.data.model.movieOne
 import com.example.movielistapp.ui.theme.MovieListAppTheme
 
 

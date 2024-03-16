@@ -1,43 +1,24 @@
 package com.example.movielistapp.data.repository
 
-import com.example.movielistapp.data.model.NetworkMovie
-import com.example.movielistapp.data.network.RemoteDataSource
+import com.example.movielistapp.data.model.Movie
+import com.example.movielistapp.data.network.model.MovieEntity
+import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-    suspend fun fetchRemotePopularMovies(): List<NetworkMovie>
+    suspend fun fetchRemotePopularMovies(): List<Movie>
 
-    suspend fun fetchRemoteUpcomingMovies(): List<NetworkMovie>
+    suspend fun fetchRemoteUpcomingMovies(): List<Movie>
 
-    suspend fun fetchRemoteNowPlayingMovies(): List<NetworkMovie>
+    suspend fun fetchRemoteNowPlayingMovies(): List<Movie>
 
-    suspend fun fetchRemoteMovieById(id: Int): NetworkMovie
+    suspend fun fetchRemoteMovieById(id: Int): Movie
 
-    suspend fun fetchMoviesByQuery(query: String): List<NetworkMovie>
+    suspend fun fetchMoviesByQuery(query: String): List<Movie>
+
+    suspend fun saveLocalMovie(movie: MovieEntity)
+
+    suspend fun deleteLocalMovie(movie: MovieEntity)
+
+    fun getLocalMovies(): Flow<List<MovieEntity>>
 }
 
-class MovieRepositoryImpl(
-    private val remoteDataSource: RemoteDataSource
-): MovieRepository {
-    override suspend fun fetchRemotePopularMovies(): List<NetworkMovie> {
-        return remoteDataSource.fetchPopularMovies()
-
-    }
-
-    override suspend fun fetchRemoteUpcomingMovies(): List<NetworkMovie> {
-        return remoteDataSource.fetchUpcomingMovies()
-
-    }
-
-    override suspend fun fetchRemoteNowPlayingMovies(): List<NetworkMovie> {
-        return remoteDataSource.fetchNowPlayingMovies()
-    }
-
-    override suspend fun fetchRemoteMovieById(id: Int): NetworkMovie {
-        return remoteDataSource.fetchMovieById(id)
-    }
-
-    override suspend fun fetchMoviesByQuery(query: String): List<NetworkMovie> {
-        return remoteDataSource.fetchMoviesByQuery(query)
-    }
-
-}

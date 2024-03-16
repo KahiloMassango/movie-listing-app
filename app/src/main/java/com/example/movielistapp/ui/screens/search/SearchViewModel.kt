@@ -2,8 +2,8 @@ package com.example.movielistapp.ui.screens.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movielistapp.data.MovieRepository
-import com.example.movielistapp.data.network.model.Movie
+import com.example.movielistapp.data.repository.MovieRepository
+import com.example.movielistapp.data.model.Movie
 import com.example.movielistapp.di.CustomHandler
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val movieRepository: MovieRepository,
+    private val movieRepository: MovieRepository ,
     private val handler: CustomHandler
 ): ViewModel() {
 
