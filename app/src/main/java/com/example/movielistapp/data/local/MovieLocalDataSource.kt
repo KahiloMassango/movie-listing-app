@@ -6,26 +6,26 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieLocalDataSource {
 
-    suspend fun saveMovie(movie: MovieEntity)
+    suspend fun saveMovieEntity(movie: MovieEntity)
 
-    suspend fun deleteMovie(movie: MovieEntity)
+    suspend fun deleteMovieEntity(movie: MovieEntity)
 
-    fun getMovies(): Flow<List<MovieEntity>>
+    fun getMoviesEntityStream(): Flow<List<MovieEntity>>
 
 }
 
 class MovieLocalDataSourceImpl(
     private val movieDao: MovieDao
 ): MovieLocalDataSource {
-    override suspend fun saveMovie(movie: MovieEntity) {
+    override suspend fun saveMovieEntity(movie: MovieEntity) {
         movieDao.insertMovie(movie)
     }
 
-    override suspend fun deleteMovie(movie: MovieEntity) {
+    override suspend fun deleteMovieEntity(movie: MovieEntity) {
         movieDao.deleteMovie(movie)
     }
 
-    override fun getMovies(): Flow<List<MovieEntity>> {
+    override fun getMoviesEntityStream(): Flow<List<MovieEntity>> {
         return movieDao.getAllMovies()
     }
 }

@@ -34,11 +34,11 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun saveLocalMovie(movie: MovieEntity) {
-        movieLocalDataSource.saveMovie(movie)
+        movieLocalDataSource.saveMovieEntity(movie)
     }
 
     override suspend fun deleteLocalMovie(movie: MovieEntity) {
-        movieLocalDataSource.deleteMovie(movie)
+        movieLocalDataSource.deleteMovieEntity(movie)
     }
 
     override fun getLocalMovies(): Flow<List<MovieEntity>> {
