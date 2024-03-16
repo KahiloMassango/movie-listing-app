@@ -1,7 +1,7 @@
 package com.example.movielistapp.data
 
 import com.example.movielistapp.data.network.model.Movie
-import com.example.movielistapp.data.network.model.MovieDto
+import com.example.movielistapp.data.network.model.MovieEntity
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
@@ -15,10 +15,10 @@ interface MovieRepository {
 
     suspend fun fetchMoviesByQuery(query: String): List<Movie>
 
-    suspend fun saveLocalMovie(movie: MovieDto)
+    suspend fun saveLocalMovie(movie: MovieEntity)
 
-    suspend fun deleteLocalMovie(movie: MovieDto)
+    suspend fun deleteLocalMovie(movie: MovieEntity)
 
-    fun getLocalMovies(): Flow<List<MovieDto>>
+    fun getLocalMovies(): Flow<List<MovieEntity>>
 }
 

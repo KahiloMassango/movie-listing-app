@@ -1,9 +1,9 @@
 package com.example.movielistapp.data
 
-import com.example.movielistapp.data.local.db.MovieLocalDataSource
+import com.example.movielistapp.data.local.MovieLocalDataSource
 import com.example.movielistapp.data.network.MovieRemoteDataSource
 import com.example.movielistapp.data.network.model.Movie
-import com.example.movielistapp.data.network.model.MovieDto
+import com.example.movielistapp.data.network.model.MovieEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -33,15 +33,15 @@ class MovieRepositoryImpl(
         return movieRemoteDataSource.fetchMoviesByQuery(query)
     }
 
-    override suspend fun saveLocalMovie(movie: MovieDto) {
+    override suspend fun saveLocalMovie(movie: MovieEntity) {
         movieLocalDataSource.saveMovie(movie)
     }
 
-    override suspend fun deleteLocalMovie(movie: MovieDto) {
+    override suspend fun deleteLocalMovie(movie: MovieEntity) {
         movieLocalDataSource.deleteMovie(movie)
     }
 
-    override fun getLocalMovies(): Flow<List<MovieDto>> {
+    override fun getLocalMovies(): Flow<List<MovieEntity>> {
         return movieLocalDataSource.getMovies()
     }
 }

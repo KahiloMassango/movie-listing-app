@@ -1,8 +1,7 @@
 package com.example.movielistapp.data.network.model
 
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.example.movielistapp.data.local.entities.MovieEntity
 import com.google.gson.annotations.SerializedName
 
 data class MoviesResponse(
@@ -32,28 +31,9 @@ data class Movie(
     val voteCount: Int
 )
 
-@Entity("favorites")
-data class MovieDto(
-    val adult: Boolean ,
-    val backdropPath: String ,
-    @PrimaryKey(false)
-    val id: Int ,
-    val imdbId: String?,
-    val title: String ,
-    val overview: String ,
-    val posterPath: String ,
-    val releaseDate: String ,
-    val runtime: Int,
-    val status: String? ,
-    val voteAverage: Double ,
-    val voteCount: Int
-)
 
-fun MovieDto.toMovie(): Movie = Movie(
-    adult, backdropPath, id, imdbId, title, overview, posterPath, releaseDate, runtime, status, voteAverage, voteCount
-)
 
-fun Movie.toMovieDto(): MovieDto = MovieDto(
+fun Movie.toMovieDto(): MovieEntity = MovieEntity(
     adult, backdropPath, id, imdbId, title, overview, posterPath, releaseDate, runtime, status, voteAverage, voteCount
 )
 

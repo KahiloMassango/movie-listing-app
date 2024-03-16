@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import com.example.movielistapp.data.MovieRepository
 import com.example.movielistapp.data.MovieRepositoryImpl
-import com.example.movielistapp.data.local.db.AppDatabase
-import com.example.movielistapp.data.local.db.MovieDao
-import com.example.movielistapp.data.local.db.MovieLocalDataSource
-import com.example.movielistapp.data.local.db.MovieLocalDataSourceImpl
+import com.example.movielistapp.data.local.dao.AppDatabase
+import com.example.movielistapp.data.local.dao.MovieDao
+import com.example.movielistapp.data.local.MovieLocalDataSource
+import com.example.movielistapp.data.local.MovieLocalDataSourceImpl
 import com.example.movielistapp.data.network.MovieApiService
 import com.example.movielistapp.data.network.MovieRemoteDataSource
 import com.example.movielistapp.data.network.MovieRemoteDataSourceImpl

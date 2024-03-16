@@ -1,12 +1,12 @@
-package com.example.movielistapp.data.local.db
+package com.example.movielistapp.data.local.dao
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.movielistapp.data.network.model.MovieDto
+import com.example.movielistapp.data.network.model.MovieEntity
 
-@Database([MovieDto::class], version = 1, exportSchema = false)
+@Database([MovieEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
