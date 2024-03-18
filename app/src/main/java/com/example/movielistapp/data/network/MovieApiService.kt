@@ -8,27 +8,24 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-
-const val MOVIE_API_KEY = BuildConfig.MOVIE_API_KEY
-
 interface MovieApiService {
-    @Headers(MOVIE_API_KEY)
+    @Headers(BuildConfig.MOVIE_API_KEY)
     @GET("movie/popular?language=en-US&page=1")
     suspend fun getPopularMovies(): NetworkMovieResponse
 
-    @Headers(MOVIE_API_KEY)
+    @Headers(BuildConfig.MOVIE_API_KEY)
     @GET("movie/upcoming?language=en-US&page=1")
     suspend fun getUpcomingMovies(): NetworkMovieResponse
 
-    @Headers(MOVIE_API_KEY)
+    @Headers(BuildConfig.MOVIE_API_KEY)
     @GET("movie/now_playing?language=en-US&page=1")
     suspend fun getNowPlayingMovies(): NetworkMovieResponse
 
-    @Headers(MOVIE_API_KEY)
+    @Headers(BuildConfig.MOVIE_API_KEY)
     @GET("movie/{movieId}")
     suspend fun getMovieById(@Path("movieId") id: Int): NetworkMovie
 
-    @Headers(MOVIE_API_KEY)
+    @Headers(BuildConfig.MOVIE_API_KEY)
     @GET("search/movie?include_adult=true")
     suspend fun searchMovieByQuery(@Query("query") query: String): NetworkMovieResponse
 
