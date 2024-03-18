@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -6,9 +9,15 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 
+val apikeyPropertiesFile = rootProject.file("local.properties")
+val apikeyProperties =  Properties()
+apikeyProperties.load(FileInputStream(apikeyPropertiesFile))
+
 android {
     namespace = "com.example.movielistapp"
     compileSdk = 34
+
+
 
     defaultConfig {
         applicationId = "com.example.movielistapp"
@@ -21,6 +30,16 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        val keystoreFile = project.rootProject.file("local.properties")
+        val properties = Properties()
+        properties.load(keystoreFile.inputStream())
+
+        val apiKey = properties.getProperty("MOVIE_API_KEY") ?: ""
+        buildConfigField(
+            type = "String",
+            name = "MOVIE_API_KEY",
+            value = apiKey
+        )
     }
 
     buildTypes {
@@ -41,6 +60,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -53,8 +73,10 @@ android {
 }
 
 
+
 dependencies {
     val room_version = "2.6.1"
+    val work_version = "2.9.0"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -68,6 +90,8 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("androidx.compose.material3:material3-android:1.2.1")
+
+    implementation("androidx.work:work-runtime-ktx:$work_version")
 
     implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
