@@ -2,15 +2,17 @@ package com.example.movielistapp.di
 
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
-import com.example.movielistapp.data.repository.MovieRepository
-import com.example.movielistapp.data.repository.MovieRepositoryImpl
-import com.example.movielistapp.data.local.dao.AppDatabase
-import com.example.movielistapp.data.local.dao.MovieDao
+import androidx.work.WorkManager
 import com.example.movielistapp.data.local.MovieLocalDataSource
 import com.example.movielistapp.data.local.MovieLocalDataSourceImpl
+import com.example.movielistapp.data.local.dao.AppDatabase
+import com.example.movielistapp.data.local.dao.MovieDao
 import com.example.movielistapp.data.network.MovieApiService
 import com.example.movielistapp.data.network.MovieRemoteDataSource
 import com.example.movielistapp.data.network.MovieRemoteDataSourceImpl
+import com.example.movielistapp.data.repository.MovieRepository
+import com.example.movielistapp.data.repository.MovieRepositoryImpl
+import com.example.movielistapp.domain.BookmarkMovieUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -69,4 +71,15 @@ object AppModule {
     ): MovieRepository {
         return MovieRepositoryImpl(movieRemoteDataSource, movieLocalDataSource)
     }
+
+    @Provides
+    fun provideWorkManager(@ApplicationContext ctx: Context): WorkManager {
+        return WorkManager.getInstance(ctx)
+    }
+
+    @Provides
+    fun provideBookmarkMovieUseCase(workManager: WorkManager, movieRepository: MovieRepository): BookmarkMovieUseCase {
+        return BookmarkMovieUseCase(workManager, movieRepository)
+    }
+
 }
