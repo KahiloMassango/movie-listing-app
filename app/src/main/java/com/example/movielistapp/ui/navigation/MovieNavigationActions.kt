@@ -11,7 +11,7 @@ object MovieRoute {
     const val SEARCH = "Search"
     const val FAVORITES = "Favorites"
     const val MAINCONTENT = "MainAppContent"
-    const val DETAIL = "Detail/{movieId}"
+    const val DETAIL = "Detail"
 }
 
 data class MovieTopLevelDestination(

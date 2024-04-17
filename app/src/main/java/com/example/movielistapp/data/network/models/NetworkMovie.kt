@@ -1,6 +1,7 @@
 package com.example.movielistapp.data.network.models
 
 import com.example.movielistapp.data.local.entities.MovieEntity
+import com.example.movielistapp.data.model.Movie
 import com.google.gson.annotations.SerializedName
 
 
@@ -12,15 +13,15 @@ data class NetworkMovieResponse(
 data class NetworkMovie(
     val adult: Boolean ,
     @SerializedName("backdrop_path")
-    val backdropPath: String ,
+    val backdropPath: String,
     val id: Int ,
     @SerializedName("imdb_id")
-    val imdbId: String? ,
+    val imdbId: String?,
     @SerializedName("original_title")
-    val title: String ,
+    val title: String,
     val overview: String ,
     @SerializedName("poster_path")
-    val posterPath: String ,
+    val posterPath: String,
     @SerializedName("release_date")
     val releaseDate: String ,
     val runtime: Int ,
@@ -30,6 +31,21 @@ data class NetworkMovie(
     val voteAverage: Double ,
     @SerializedName("vote_count")
     val voteCount: Int
+)
+
+fun NetworkMovie.asMovie() = Movie(
+    adult ,
+    backdropPath ,
+    id ,
+    imdbId ,
+    title ,
+    overview ,
+    posterPath ,
+    releaseDate ,
+    runtime ,
+    status ,
+    voteAverage ,
+    voteCount
 )
 
 fun NetworkMovie.asEntity() = MovieEntity(

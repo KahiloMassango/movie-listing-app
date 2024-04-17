@@ -5,6 +5,7 @@ import com.example.movielistapp.data.local.entities.MovieEntity
 import com.example.movielistapp.data.local.entities.asMovie
 import com.example.movielistapp.data.model.Movie
 import com.example.movielistapp.data.network.MovieRemoteDataSource
+import com.example.movielistapp.data.network.models.asMovie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -15,24 +16,27 @@ class MovieRepositoryImpl(
 ): MovieRepository {
     override suspend fun fetchRemotePopularMovies(): List<Movie> {
         return movieRemoteDataSource.fetchPopularMovies()
+            .map { it.asMovie() }
 
     }
 
     override suspend fun fetchRemoteUpcomingMovies(): List<Movie> {
         return movieRemoteDataSource.fetchUpcomingMovies()
-
+            .map { it.asMovie() }
     }
 
     override suspend fun fetchRemoteNowPlayingMovies(): List<Movie> {
         return movieRemoteDataSource.fetchNowPlayingMovies()
+            .map { it.asMovie() }
     }
 
     override suspend fun fetchRemoteMovieById(id: Int): Movie {
-        return movieRemoteDataSource.fetchMovieById(id)
+        return movieRemoteDataSource.fetchMovieById(id).asMovie()
     }
 
     override suspend fun fetchMoviesByQuery(query: String): List<Movie> {
         return movieRemoteDataSource.fetchMoviesByQuery(query)
+            .map { it.asMovie() }
     }
 
     override suspend fun saveLocalMovie(movie: MovieEntity) {
@@ -43,8 +47,18 @@ class MovieRepositoryImpl(
         movieLocalDataSource.deleteMovieEntity(movie)
     }
 
-    override fun getLocalMovies(): Flow<List<Movie>> {
-        return movieLocalDataSource.getMovies()
-            .map { it.map(MovieEntity::asMovie) }
+
+    override fun getBookmarkedMoviesStream(): Flow<List<Movie>> {
+       return movieLocalDataSource.getMoviesEntityStream().map { movieEntity ->
+           movieEntity.map { it.asMovie() }
+       }
+    }
+
+    override fun getBookmarkedMoviesIds(): Flow<List<Int>> {
+        return movieLocalDataSource.getBookmarkedMoviesIds()
+    }
+
+    override suspend fun getMovieByID(id: Int): Movie? {
+        return movieLocalDataSource.getMovieById(id)?.asMovie()
     }
 }

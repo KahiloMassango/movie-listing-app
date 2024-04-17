@@ -39,7 +39,7 @@ fun StarRating(
     ) {
         Text(
             text = "%.1f".format(rating),
-            style = MaterialTheme.typography.labelLarge
+            style = MaterialTheme.typography.labelSmall
         )
         repeat(filledStars) {
             Icon(

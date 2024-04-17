@@ -28,8 +28,8 @@ fun StickyHeader(
         Text(
             modifier = modifier,
             text = title,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold
+            fontSize = 16.sp,
+            fontWeight = FontWeight.W500
         )
     }
 

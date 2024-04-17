@@ -5,12 +5,15 @@ import com.example.movielistapp.data.local.entities.MovieEntity
 import kotlinx.coroutines.flow.Flow
 
 interface MovieLocalDataSource {
-
     suspend fun saveMovieEntity(movie: MovieEntity)
 
     suspend fun deleteMovieEntity(movie: MovieEntity)
 
     fun getMoviesEntityStream(): Flow<List<MovieEntity>>
+
+    suspend fun getMovieById(id: Int): MovieEntity?
+
+    fun getBookmarkedMoviesIds(): Flow<List<Int>>
 
 }
 
@@ -26,6 +29,13 @@ class MovieLocalDataSourceImpl(
     }
 
     override fun getMoviesEntityStream(): Flow<List<MovieEntity>> {
-        return movieDao.getAllMovies()
+        return movieDao.getBookmarkedMoviesStream()
+    }
+
+    override fun getBookmarkedMoviesIds(): Flow<List<Int>> {
+        return movieDao.getBookmarkedMoviesIdsStream()
+    }
+    override suspend fun getMovieById(id: Int): MovieEntity? {
+        return movieDao.getMovieById(id)
     }
 }

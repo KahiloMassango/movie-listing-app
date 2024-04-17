@@ -21,7 +21,7 @@ data class Movie(
 
 
 
-fun Movie.toMovieDto(): MovieEntity = MovieEntity(
+fun Movie.asEntity(): MovieEntity = MovieEntity(
     adult, backdropPath, id, imdbId, title, overview, posterPath, releaseDate, runtime, status, voteAverage, voteCount
 )
 

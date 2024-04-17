@@ -9,18 +9,25 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.outlined.Bookmark
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
@@ -36,6 +43,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.movielistapp.R
+import com.example.movielistapp.data.model.Movie
 import com.example.movielistapp.data.network.MovieApiService.Companion.ImdbUrl
 import com.example.movielistapp.ui.components.StarRating
 
@@ -46,11 +54,55 @@ fun DetailScreen(
     viewModel: DetailViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
-    val uiState = viewModel.uiState
-    val context = LocalContext.current
+    when(val uiState = viewModel.uiState.collectAsState().value) {
+        is DetailState.Success -> DetailContent(
+            movie = uiState.movie,
+            onNavigateUp = { navController.navigateUp() },
+            canBookmark = uiState.movie.id !in viewModel.bookmarkedMovies.collectAsState().value,
+            onBookmark = { viewModel.bookmarkMovie(uiState.movie) },
+            onDelete = { viewModel.deleteBookmarkedMovie(uiState.movie) }
+        )
+        is DetailState.Loading -> DetailLoading()
+        is DetailState.Error -> DetailError()
+    }
 
+
+}
+
+@Composable
+fun DetailLoading() {
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        CircularProgressIndicator()
+    }
+}
+@Composable
+fun DetailError() {
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Text(text = "Internet connection problem!")
+    }
+}
+
+@Composable
+fun DetailContent(
+    modifier: Modifier = Modifier,
+    movie: Movie,
+    canBookmark: Boolean,
+    onBookmark: () -> Unit,
+    onDelete: () -> Unit,
+    onNavigateUp: () -> Unit
+) {
+    val context = LocalContext.current
+    val scrollState = rememberScrollState()
     Column(
-        modifier = modifier
+        modifier = modifier.verticalScroll(scrollState)
     ) {
         val gradColor = listOf(
             Color.Transparent,
@@ -66,37 +118,44 @@ fun DetailScreen(
                     .height(360.dp)
                     .drawWithCache {
                         val bb = Brush.linearGradient(
-                            colors = gradColor ,
-                            start = Offset(0.0f , 250.0f) ,
-                            end = Offset(0.0f , 940.0f)
+                            colors = gradColor,
+                            start = Offset(0.0f,250.0f),
+                            end = Offset(0.0f,940.0f)
                         )
                         onDrawWithContent {
                             drawContent()
                             drawRect(bb)
                         }
                     },
-                model = uiState.backdropPath,
+                model = movie.backdropPath,
                 contentDescription = null,
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                onSuccess = { /*isLoading = true*/ }
             )
-            IconButton(
-                modifier = Modifier.align(Alignment.TopEnd),
-                onClick = { viewModel.saveMovie(movie = uiState) }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .statusBarsPadding(),
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Bookmark ,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onBackground
-                )
-            }
-            IconButton(
-                onClick = { navController.navigateUp() }
-            ) {
-               Icon(
-                   imageVector = Icons.Default.ArrowBackIosNew ,
-                   contentDescription = null,
-                   tint = MaterialTheme.colorScheme.onBackground
-               )
+                IconButton(
+                    onClick = onNavigateUp
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBackIosNew,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+                IconButton(
+                    onClick = if(canBookmark) onBookmark else onDelete,
+                ) {
+                    Icon(
+                        imageVector = if(canBookmark) Icons.Default.BookmarkBorder else Icons.Default.Bookmark,
+                        contentDescription = null,
+                        tint = Color.Yellow
+                    )
+                }
             }
             Row(
                 modifier = Modifier
@@ -112,11 +171,11 @@ fun DetailScreen(
                 ) {
                     Text(
                         modifier = Modifier ,
-                        text = uiState.title ,
-                        style = MaterialTheme.typography.headlineLarge ,
+                        text = movie.title ,
+                        style = MaterialTheme.typography.titleMedium ,
                         color = MaterialTheme.colorScheme.onBackground
                     )
-                    StarRating(rating = uiState.voteAverage)
+                    StarRating(rating = movie.voteAverage)
                 }
                 Image(
                     modifier = Modifier
@@ -137,7 +196,7 @@ fun DetailScreen(
             ) {
                 Text(
                     modifier = Modifier.padding(top = 8.dp) ,
-                    text = "Duration: ${uiState.runtime}min    Status: ${uiState.status}" ,
+                    text = "Duration: ${movie.runtime}min    Status: ${movie.status}" ,
                     style = MaterialTheme.typography.bodySmall ,
                     fontWeight = FontWeight.Bold
                 )
@@ -145,31 +204,26 @@ fun DetailScreen(
             Text(
                 modifier = Modifier.padding(top = 16.dp) ,
                 text = "Overview" ,
-                style = MaterialTheme.typography.bodyLarge ,
+                style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 modifier = Modifier.padding(top = 12.dp) ,
-                text = uiState.overview,
-                style = MaterialTheme.typography.bodyMedium
+                text = movie.overview,
+                style = MaterialTheme.typography.bodySmall
             )
         }
 
-        Text(
-            modifier = Modifier.padding(start = 12.dp, top = 16.dp),
-            text = "See on: ",
-            style = MaterialTheme.typography.labelLarge
-        )
         Row(
             modifier = Modifier
                 .padding(horizontal = 12.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            if (uiState.imdbId != null){
+            if (movie.imdbId != null){
                 Image(
                     modifier = Modifier
-                        .clickable { openInBrowser(context , uiState.imdbId) }
+                        .clickable { openInBrowser(context,movie.imdbId) }
                         .size(58.dp),
                     painter = painterResource(id = R.drawable.imdb_icon),
                     contentDescription = null
@@ -177,7 +231,6 @@ fun DetailScreen(
             }
         }
     }
-
 }
 
 private fun openInBrowser(ctx: Context, imbdId: String) {

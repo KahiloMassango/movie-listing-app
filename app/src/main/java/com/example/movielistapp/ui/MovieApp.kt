@@ -33,10 +33,10 @@ fun MovieApp(
         composable(MovieRoute.MAINCONTENT) {
             MainAppContent(navController = navController)
         }
-        composable(MovieRoute.DETAIL) {
-
+        composable("${MovieRoute.DETAIL}/{movieId}") {
             DetailScreen(navController = navController)
         }
+
     }
 }
 
@@ -57,6 +57,6 @@ fun NavHostController.navigateTo(destination: MovieTopLevelDestination) {
 }
 
 fun NavHostController.navigateToDetail(movieId: Int) {
-    navigate("Detail/$movieId")
+    navigate("${MovieRoute.DETAIL}/$movieId")
 }
 

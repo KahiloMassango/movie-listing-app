@@ -19,6 +19,10 @@ interface MovieRepository {
 
     suspend fun deleteLocalMovie(movie: MovieEntity)
 
-    fun getLocalMovies(): Flow<List<Movie>>
+    suspend fun getMovieByID(id: Int): Movie?
+
+    fun getBookmarkedMoviesStream(): Flow<List<Movie>>
+
+    fun getBookmarkedMoviesIds(): Flow<List<Int>>
 }
 

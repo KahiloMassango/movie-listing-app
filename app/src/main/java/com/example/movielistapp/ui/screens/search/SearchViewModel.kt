@@ -2,10 +2,11 @@ package com.example.movielistapp.ui.screens.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movielistapp.data.repository.MovieRepository
 import com.example.movielistapp.data.model.Movie
+import com.example.movielistapp.data.model.asEntity
+import com.example.movielistapp.data.repository.MovieRepository
 import com.example.movielistapp.di.CustomHandler
-import com.google.gson.Gson
+import com.example.movielistapp.domain.BookmarkMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val movieRepository: MovieRepository ,
+    private val movieRepository: MovieRepository,
+    private val bookmarkMovieUseCase: BookmarkMovieUseCase,
     private val handler: CustomHandler
 ): ViewModel() {
 
@@ -42,10 +44,10 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun parseMovieToDetail(movieObj: Movie) {
+
+    fun bookmarkMovie(movie: Movie) {
         viewModelScope.launch {
-            val movie = Gson().toJson(movieObj)
-            handler.savedStateHandle["movie"] = movie
+            bookmarkMovieUseCase(movie.asEntity())
         }
     }
 }

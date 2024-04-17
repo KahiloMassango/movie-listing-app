@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.movielistapp.ui.components.ExtendedMovieCard
-import com.example.movielistapp.ui.navigation.MovieRoute
+import com.example.movielistapp.ui.navigateToDetail
 import com.example.movielistapp.ui.theme.MovieListAppTheme
 
 @Composable
@@ -44,6 +45,7 @@ fun SearchScreen(
 ) {
     val uiState = viewModel.uistate.collectAsState().value
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
 
     Column(
         modifier = modifier
@@ -87,7 +89,7 @@ fun SearchScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Start searching",
+                    text = "Start searching!",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -98,10 +100,9 @@ fun SearchScreen(
                 items(uiState.results) { movie ->
                     ExtendedMovieCard(
                         modifier = Modifier.padding(vertical = 8.dp) ,
-                        movie = movie ,
+                        movie = movie,
                         onClick = {
-                            viewModel.parseMovieToDetail(movie)
-                            navController.navigate(MovieRoute.DETAIL)
+                            navController.navigateToDetail(movie.id)
                         }
                     )
                 }
