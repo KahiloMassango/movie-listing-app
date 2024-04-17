@@ -75,6 +75,7 @@ android {
 
 
 dependencies {
+    implementation("androidx.test.ext:junit-ktx:1.1.5")
     val room_version = "2.6.1"
     val work_version = "2.9.0"
 
@@ -105,7 +106,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    testImplementation("junit:junit:4.13.2")
+
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
