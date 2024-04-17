@@ -56,6 +56,7 @@ fun DetailScreen(
 ) {
     when(val uiState = viewModel.uiState.collectAsState().value) {
         is DetailState.Success -> DetailContent(
+            modifier = modifier,
             movie = uiState.movie,
             onNavigateUp = { navController.navigateUp() },
             canBookmark = uiState.movie.id !in viewModel.bookmarkedMovies.collectAsState().value,
