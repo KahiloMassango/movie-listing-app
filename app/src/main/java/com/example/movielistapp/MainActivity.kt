@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.movielistapp.ui.MovieApp
+import com.example.movielistapp.presentation.MovieApp
 import com.example.movielistapp.ui.theme.MovieListAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 

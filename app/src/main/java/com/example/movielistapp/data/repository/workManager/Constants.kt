@@ -1,8 +1,0 @@
-package com.example.movielistapp.data.repository.workManager
-
-const val BACKDROP_IMAGE_URL_KEY = "BACKDROP_IMAGE_URL"
-const val POSTER_IMAGE_URL_KEY = "POSTER_IMAGE_URL"
-const val BACKDROP_IMAGE_FILENAME_KEY = "BACKDROP_FILENAME"
-const val POSTER_IMAGE_FILENAME_KEY = "POSTER_FILENAME"
-const val BACKDROP_OUTPUT  = "BACKDROP_PATH"
-const val POSTER_OUTPUT  = "POSTER_PATH"

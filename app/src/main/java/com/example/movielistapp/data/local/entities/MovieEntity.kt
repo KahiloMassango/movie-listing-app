@@ -3,10 +3,10 @@ package com.example.movielistapp.data.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.movielistapp.data.model.Movie
+import com.example.movielistapp.domain.model.Movie
 
-@Entity("favorites")
-data class MovieEntity(
+@Entity(tableName = "movies")
+data class  MovieEntity(
     val adult: Boolean,
     @ColumnInfo(name = "backdrop_path")
     val backdropPath: String,
@@ -24,9 +24,25 @@ data class MovieEntity(
     @ColumnInfo(name = "vote_average")
     val voteAverage: Double,
     @ColumnInfo(name = "vote_count")
-    val voteCount: Int
+    val voteCount: Int,
+    val category: String
 )
 
-fun MovieEntity.asMovie(): Movie = Movie(
-    adult, backdropPath, id, imdbId, title, overview, posterPath, releaseDate, runtime, status, voteAverage, voteCount
+enum class MovieCategory {
+    POPULAR, UPCOMING, NOW_PLAYING
+}
+
+fun MovieEntity.asDomain() = Movie(
+    adult,
+    backdropPath ,
+    id,
+    imdbId,
+    title,
+    overview ,
+    posterPath,
+    releaseDate ,
+    runtime ,
+    status,
+    voteAverage,
+    voteCount
 )
