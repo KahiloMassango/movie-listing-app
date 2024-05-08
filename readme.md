@@ -2,6 +2,8 @@
 
 This an offline first app that lists the popular, upcoming and playing now movies. The app gets data from [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started).
 
+The app uses MVVM architecture recommended by [Modern Android Development(MAD)](https://developer.android.com/series/mad-skills)
+
 ## Technologies
 
 * [Jetpack Compose](https://developer.android.com/develop/ui/compose) - Jetpack Compose is Android’s recommended modern toolkit for building native UI.
