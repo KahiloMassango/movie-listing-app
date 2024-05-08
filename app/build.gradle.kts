@@ -79,8 +79,8 @@ dependencies {
     implementation("androidx.hilt:hilt-common:1.2.0")
     implementation("androidx.hilt:hilt-work:1.2.0")
     androidTestImplementation(project(":app"))
-    val room_version = "2.6.1"
-    val work_version = "2.9.0"
+    val roomVersion = "2.6.1"
+    val workManagerVersion = "2.9.0"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -95,11 +95,11 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("androidx.compose.material3:material3-android:1.2.1")
 
-    implementation("androidx.work:work-runtime-ktx:$work_version")
+    implementation("androidx.work:work-runtime-ktx:$workManagerVersion")
 
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     implementation("com.google.dagger:hilt-android:2.50")
     ksp("com.google.dagger:hilt-android-compiler:2.48.1")

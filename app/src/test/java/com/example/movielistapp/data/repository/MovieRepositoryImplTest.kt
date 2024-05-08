@@ -10,11 +10,17 @@ import com.example.movielistapp.upcomingMovieTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 
 class MovieRepositoryImplTest {
-    private val  repository = MovieRepositoryImpl(FakeRemoteDataSource(), FakeLocalDataSource())
-    
+
+    lateinit var repository: MovieRepositoryImpl
+
+    @Before
+    fun setUp() {
+        repository = MovieRepositoryImpl(FakeRemoteDataSource(), FakeLocalDataSource())
+    }
 
     @Test
     fun testGetMovies_FromEmptyDatabase_returnsEmptyList() = runTest {
@@ -36,7 +42,7 @@ class MovieRepositoryImplTest {
     }
 
     @Test
-    fun `get movie by id returns correct movie`() = runTest {
+    fun `getLocalMovieByID() returns the movie with the given ID`() = runTest {
         // Given
         val movie = popularMovieTest
         repository.saveLocalMovies(listOf(movie))
@@ -51,7 +57,7 @@ class MovieRepositoryImplTest {
     @Test
     fun `get movie by id returns null if not found`() = runTest {
         // Given
-        val movieId = 999
+        val movieId = -1
         val movie = popularMovieTest
         repository.saveLocalMovies(listOf(movie))
 

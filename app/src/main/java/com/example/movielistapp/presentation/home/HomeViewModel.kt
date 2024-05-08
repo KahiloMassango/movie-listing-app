@@ -32,8 +32,4 @@ class HomeViewModel @Inject constructor (
             workManagerRepository.syncDatabase()
         }
     }
-
-    fun refresh() {
-        workManagerRepository.syncDatabase()
-    }
 }

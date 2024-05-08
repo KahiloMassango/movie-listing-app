@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -16,11 +14,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.movielistapp.domain.model.Movie
+import com.example.movielistapp.presentation.navigateToDetail
 import com.example.movielistapp.presentation.util.components.ExtendedMovieCard
 import com.example.movielistapp.presentation.util.components.NowPlayingMovieList
 import com.example.movielistapp.presentation.util.components.StickyHeader
 import com.example.movielistapp.presentation.util.components.UpcomingMovieList
-import com.example.movielistapp.presentation.navigateToDetail
 import com.example.movielistapp.ui.theme.MovieListAppTheme
 
 @Composable
@@ -38,7 +36,6 @@ fun HomeScreen(
          onMovieClick = { id ->
              navController.navigateToDetail(id)
          },
-         onRetry = viewModel::refresh
      )
 }
 
@@ -50,7 +47,6 @@ fun HomeContent(
     popularMovies: List<Movie>,
     playingNowMovies: List<Movie>,
     onMovieClick: (Int) -> Unit,
-    onRetry: () -> Unit
 ) {
     LazyColumn(
         modifier = modifier
@@ -58,11 +54,6 @@ fun HomeContent(
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
-        item {
-            Button(onClick = { onRetry() }) {
-                Text(text = "Try Again")
-            }
-        }
         stickyHeader { StickyHeader(title = "Upcoming") }
         item {
             UpcomingMovieList(
